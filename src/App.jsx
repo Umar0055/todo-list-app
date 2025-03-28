@@ -12,7 +12,7 @@ const onClickhandel = () => {
     return alert("Please fill all the fields")
   }
   if(editing){
-    const updateItem=addtext.map((item) => item.id===editing.id?{...item,title,details}:item);
+    const updateItem=addtext.map((item) => item.id===editing?{...item,title,details}:item);
     setAddText(updateItem);
     setEditing(null);
   }else{
