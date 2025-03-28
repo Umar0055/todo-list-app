@@ -2,38 +2,38 @@ import React ,{useState} from 'react'
 
 export default function App() {
 
-const [text, setText] = useState('');
+const [title, setTitle] = useState('');
 const [details,setDetails]=useState('')
 const [addtext, setAddText] = useState([]);
 
 const onClickhandel = () => {
-  if(text === "" || details ===""){
+  if(title=== "" || details ===""){
     return alert("Please fill all the fields")
   }
   const newText = {
     id: addtext.length + 1,
     details:details,
-    text: text
+    title: title
   };
   setAddText([...addtext, newText,]);
-  setText('');
+  setTitle('');
   setDetails('');
   console.log(newText);
 };
 
 const onDelete = (id) => {
-  const updateitem = addtext.filter((item) => item.id !== id);
-  setAddText(updateitem);
+  const deletetext = addtext.filter((item) => item.id !== id);
+  setAddText(deletetext);
 };
 
   
  
     return (
       <div>
-        <label >text</label>
-      <input value={text} type='text' placeholder='enter text' onChange={(e)=>setText(e.target.value)}/>
+        <label >title:</label>
+      <input value={title} type='text' placeholder='enter youer title' onChange={(e)=>setTitle(e.target.value)}/>
       <br />
-      <label >details</label>
+      <label >details:</label>
       <input value={details} type='text' placeholder='enter details' onChange={(e)=>setDetails(e.target.value)}/>
       <br />
       <button onClick={onClickhandel}>Click me</button>
@@ -52,7 +52,7 @@ const onDelete = (id) => {
   <tr key={item.id}>
  
 
-            <td>{item.text}</td>
+            <td>{item.title}</td>
             <td>{item.details}</td>
             <td><button onClick={() => onDelete(item.id)}>delete</button>
             <button>edit</button>
