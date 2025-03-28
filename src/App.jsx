@@ -3,29 +3,39 @@ import React ,{useState} from 'react'
 export default function App() {
 
 const [title, setTitle] = useState('');
-const [details,setDetails]=useState('')
+const [details,setDetails]=useState('');
+const [editing,setEditing]=useState(null);
 const [addtext, setAddText] = useState([]);
 
 const onClickhandel = () => {
   if(title=== "" || details ===""){
     return alert("Please fill all the fields")
   }
+  if(editing){
+    const updateItem=addtext.map((item) => item.id===editing.id?{...item,title,details}:item);
+    setAddText(updateItem);
+    setEditing(null);
+  }else{
   const newText = {
     id: addtext.length + 1,
     details:details,
     title: title
   };
   setAddText([...addtext, newText,]);
-  setTitle('');
-  setDetails('');
   console.log(newText);
 };
-
+setTitle('');
+setDetails('');
+}
 const onDelete = (id) => {
   const deletetext = addtext.filter((item) => item.id !== id);
   setAddText(deletetext);
 };
-
+const onEdit = (item) => {
+setTitle(item.title)
+setDetails(item.details)
+setEditing(item.id);
+};
   
  
     return (
@@ -36,7 +46,7 @@ const onDelete = (id) => {
       <label >details:</label>
       <input value={details} type='text' placeholder='enter details' onChange={(e)=>setDetails(e.target.value)}/>
       <br />
-      <button onClick={onClickhandel}>Click me</button>
+      <button onClick={onClickhandel}>{editing!==null ?"Update":"Add"}</button>
 
     <table border={"1"}>
       <thead>
@@ -55,7 +65,7 @@ const onDelete = (id) => {
             <td>{item.title}</td>
             <td>{item.details}</td>
             <td><button onClick={() => onDelete(item.id)}>delete</button>
-            <button>edit</button>
+            <button onClick={() => onEdit(item)}>edit</button>
             </td>
             
           </tr>
